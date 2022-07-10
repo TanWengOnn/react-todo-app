@@ -6,11 +6,9 @@ export default function App() {
   //---------------------------Variables---------------------------//
   const [name, setName] = React.useState<string>("");
   const [age, setAge] = React.useState<string | undefined>("");
-  const [color, setColor] = React.useState<string | undefined>("red");
+  const [color, setColor] = React.useState<string | undefined>("");
   const [gender, setGender] = React.useState<string | undefined>("");
-
-  var submit: boolean = false;
-  //console.log(submit);
+  const [message, setMessage] = React.useState<string>("false");
 
   //---------------------------Event Functions---------------------------//
   const changeName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,12 +27,23 @@ export default function App() {
     setGender(event.target.value);
   };
 
+  const changeMessage = (event: React.ChangeEvent<HTMLButtonElement>) => {
+    setMessage(event.target.value);
+  };
+
   //---------------------------Event/Submit Functions---------------------------//
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     //Stops page from refreshing on submit
     event.preventDefault();
-    submit = true;
-    console.log(name, age, color, gender, submit);
+
+    // Only show message if everything is filled up 
+    if (!(name === "" || age === "" || gender === "" || color === "")) {
+      setMessage("true");
+    }
+    else {
+      setMessage("false");
+    }
+    console.log(name, age, color, gender);
   };
 
   //---------------------------Event/Clear Functions---------------------------//
@@ -45,6 +54,7 @@ export default function App() {
     setColor("");
     setGender("");
 
+    setMessage("false");
     console.log("Clear");
   };
   //---------------------------Main Section---------------------------//
@@ -56,21 +66,17 @@ export default function App() {
           <Input name="Age" value={age} onChange={changeAge} />
           <Radio name="Gender" onChange={changeGender} />
           <Select name="Favourite Color" value={color} onChange={changeColor} />
-          <button type="submit" className="btn-primary mb-16">
+          <button type="submit" className="btn-primary mb-16" value={message}>
             Submit
           </button>
           <button type="button" className="btn-secondary" onClick={handleClear}>
             Clear
           </button>
+          
         </form>
       </div>
-
-      <div className="msg">
-        <h1>
-          {name} is {age} years old, and {gender === "male" ? "he" : "she"}{" "}
-          likes {color} color.
-        </h1>
-      </div>
+      <Message name={name} value={message} age={age} gender={gender} color={color} />
+     
     </div>
   );
 }
@@ -122,9 +128,43 @@ const Select = ({ value, onChange, name }: SelectType) => {
     <div className="mb-16">
       <label>{name}</label>
       <select value={value} onChange={onChange}>
+      <option value=""></option>
         <option value="red">Red</option>
         <option value="blue">Blue</option>
       </select>
     </div>
+  );
+};
+
+//---------------------------Message Component---------------------------//
+type MessageType = {
+  name: string;
+  age: string | undefined;
+  gender: string | undefined;
+  color: string | undefined;
+  value: string;
+  //onChange: (event: React.DOMAttributes<HTMLFormElement>) => void;
+};
+
+const Message = ({ value, name, age, gender, color} :MessageType ) => {
+  return (
+    <div className="mb-16" >
+
+    {/* Only show message if everything is filled up  */}
+    {value !== "false" ? 
+    <div className="msg" >
+      <h1>
+        {name} is {age} years old, and {gender === "male" ? "he" : "she"}{" "}
+        likes {color} color.
+      </h1>
+    </div>
+     : 
+     <div className="msg" >
+       <h1>
+         Please fill up all of the questions.  
+       </h1>
+     </div>}
+
+  </div>
   );
 };
