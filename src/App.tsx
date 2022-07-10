@@ -1,3 +1,4 @@
+import { isVisible } from "@testing-library/user-event/dist/utils";
 import * as React from "react";
 import "./App.css";
 
@@ -7,6 +8,9 @@ export default function App() {
   const [age, setAge] = React.useState<string | undefined>("");
   const [color, setColor] = React.useState<string | undefined>("red");
   const [gender, setGender] = React.useState<string | undefined>("");
+
+  var submit: boolean = false;
+  //console.log(submit);
 
   //---------------------------Event Functions---------------------------//
   const changeName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +33,8 @@ export default function App() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     //Stops page from refreshing on submit
     event.preventDefault();
-    console.log(name, age, color, gender);
+    submit = true;
+    console.log(name, age, color, gender, submit);
   };
 
   //---------------------------Event/Clear Functions---------------------------//
@@ -44,19 +49,28 @@ export default function App() {
   };
   //---------------------------Main Section---------------------------//
   return (
-    <div className="pa-16">
-      <form onSubmit={handleSubmit}>
-        <Input name="Name" value={name} onChange={changeName} />
-        <Input name="Age" value={age} onChange={changeAge} />
-        <Radio name="Gender" onChange={changeGender} />
-        <Select name="Favourite Color" value={color} onChange={changeColor} />
-        <button type="submit" className="btn-primary mb-16">
-          Submit
-        </button>
-        <button type="button" className="btn-secondary" onClick={handleClear}>
-          Clear
-        </button>
-      </form>
+    <div className="pa-16 d-flex">
+      <div className="form">
+        <form onSubmit={handleSubmit}>
+          <Input name="Name" value={name} onChange={changeName} />
+          <Input name="Age" value={age} onChange={changeAge} />
+          <Radio name="Gender" onChange={changeGender} />
+          <Select name="Favourite Color" value={color} onChange={changeColor} />
+          <button type="submit" className="btn-primary mb-16">
+            Submit
+          </button>
+          <button type="button" className="btn-secondary" onClick={handleClear}>
+            Clear
+          </button>
+        </form>
+      </div>
+
+      <div className="msg">
+        <h1>
+          {name} is {age} years old, and {gender === "male" ? "he" : "she"}{" "}
+          likes {color} color.
+        </h1>
+      </div>
     </div>
   );
 }

@@ -17,6 +17,13 @@ select {
 
 .d-flex {
   display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.msg {
+  align-self: center;
+  font-size: 12px;
 }
 
 .v-center {
