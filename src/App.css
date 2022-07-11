@@ -21,9 +21,18 @@ select {
   justify-content: space-around;
 }
 
+.form {
+  flex: 0.5;
+}
+
 .msg {
   align-self: center;
   font-size: 12px;
+}
+
+.radio {
+  width: 5%;
+  margin: 16px;
 }
 
 .v-center {

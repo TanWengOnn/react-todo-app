@@ -75,8 +75,20 @@ export default function App() {
           
         </form>
       </div>
-      <Message name={name} value={message} age={age} gender={gender} color={color} />
-     
+
+      {/* <Message name={name} value={message} age={age} gender={gender} color={color} /> */}
+      {message !== "false" ? 
+        <div className="msg" >
+          <h1>
+            {name} is {age} years old, and {gender === "male" ? "he" : "she"}{" "}
+            likes {color} color.
+          </h1>
+        </div> : 
+        <div className="msg" >
+          <h1>
+            Please fill up all of the questions.  
+          </h1>
+        </div>}
     </div>
   );
 }
@@ -107,10 +119,10 @@ type RadioType = {
 const Radio = ({ onChange, name }: RadioType) => {
   return (
     <div className="mb-16">
-      <label>{name}</label>
-      <input type="radio" value="male" name="gender" onChange={onChange} />
-      <label>Male</label>
-      <input type="radio" value="female" name="gender" onChange={onChange} />
+      <label>{name}</label><br />
+      <input className="radio" type="radio" value="male" name="gender" onChange={onChange} />
+      <label>Male</label><br />
+      <input className="radio" type="radio" value="female" name="gender" onChange={onChange} />
       <label>Female</label>
     </div>
   );
@@ -137,34 +149,34 @@ const Select = ({ value, onChange, name }: SelectType) => {
 };
 
 //---------------------------Message Component---------------------------//
-type MessageType = {
-  name: string;
-  age: string | undefined;
-  gender: string | undefined;
-  color: string | undefined;
-  value: string;
-  //onChange: (event: React.DOMAttributes<HTMLFormElement>) => void;
-};
+// type MessageType = {
+//   name: string;
+//   age: string | undefined;
+//   gender: string | undefined;
+//   color: string | undefined;
+//   value: string;
+//   //onChange: (event: React.DOMAttributes<HTMLFormElement>) => void;
+// };
 
-const Message = ({ value, name, age, gender, color} :MessageType ) => {
-  return (
-    <div className="mb-16" >
+// const Message = ({ value, name, age, gender, color} :MessageType ) => {
+//   return (
+//     <div className="mb-16" >
 
-    {/* Only show message if everything is filled up  */}
-    {value !== "false" ? 
-    <div className="msg" >
-      <h1>
-        {name} is {age} years old, and {gender === "male" ? "he" : "she"}{" "}
-        likes {color} color.
-      </h1>
-    </div>
-     : 
-     <div className="msg" >
-       <h1>
-         Please fill up all of the questions.  
-       </h1>
-     </div>}
+//     {/* Only show message if everything is filled up  */}
+//     {value !== "false" ? 
+//     <div className="msg" >
+//       <h1>
+//         {name} is {age} years old, and {gender === "male" ? "he" : "she"}{" "}
+//         likes {color} color.
+//       </h1>
+//     </div>
+//      : 
+//      <div className="msg" >
+//        <h1>
+//          Please fill up all of the questions.  
+//        </h1>
+//      </div>}
 
-  </div>
-  );
-};
+//   </div>
+//   );
+// };
